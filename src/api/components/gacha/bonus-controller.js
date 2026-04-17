@@ -4,14 +4,17 @@ const bonusController = {
   // Bonus 1: History gacha user
   async getHistory(req, res, next) {
     try {
-      const { userId } = req.query;
-      if (!userId) {
-        return res
-          .status(400)
-          .json({ success: false, message: 'userId wajib di query parameter' });
+      const { user } = req;
+
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          message: 'Unauthorized - Token tidak valid',
+        });
       }
 
-      const history = await gachaService.getUserHistory(userId);
+      const history = await gachaService.getUserHistory(user._id);
+
       res.status(200).json({
         success: true,
         data: history,
