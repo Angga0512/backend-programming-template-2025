@@ -1,20 +1,59 @@
-# Backend Programming Template (2025)
+## Deskripsi Proyek
 
-## Development Setup
+Backend untuk aplikasi undian dengan sistem gacha. Setiap user hanya boleh gacha maksimal 5 kali dalam 1 hari. Program ini memastikan kuota hadiah tidak terlampaui dan mencatat semua aktivitas di MongoDB.
 
-1. Fork and clone this repository to your local computer.
-2. Open the project using VS Code.
-3. Install the recommended VS Code extensions: `ESLint` and `Prettier`.
-4. Copy and rename `.env.example` to `.env`. Open `.env` and change the database connection string.
-5. Run `npm install` to install the project dependencies.
-6. Run `npm run dev` to start the dev server.
-7. Test the endpoints in the API client app.
+## Fitur
 
-## Add New API Endpoints
+- Autentikasi JWT
+- Endpoint gacha yang diprotect dengan token
+- Pencatatan log gacha di database
 
-1. Create a new database schema in `./src/models`.
-2. Create a new folder in `./src/api/components` (if needed). Remember to separate your codes to repositories, services, controllers, and routes.
-3. Add the new route in `./src/api/routes.js`.
-4. Test your new endpoints in the API client app.
+## Cara Menjalankan
 
-## TEST
+npm install
+npm run dev
+Server berjalan di localhost:5000
+
+## Daftar Endpoint
+
+1. Create User
+   POST localhost:5000/api/users
+   Input = Body:JSON
+   {
+   "email": "emailkamu@test.com",
+   "full_name": "nama kamu",
+   "password": "passwordkamu",
+   "confirm_password": "passwordkamu"
+   }
+   Deskripsi: Menyimpan akun user kedalam database
+
+2. Authentication
+   POST localhost:5000/api/auth/login
+   Input: JSON
+   {
+   "email": "emailkamu@test.com",
+   "password": "passwordkamu"
+   }
+   Deskripsi: Mendapatkan token login yang berlaku selama 1 hari
+
+3. Gacha (Protected)
+   POST localhost:5000/api/gacha
+   Input = Header:
+   Key: Authorization
+   Value: JWT <token>
+   Deskripsi: Melakukan gacha (maksimal 5 kali per hari)
+
+4. History Gacha User
+   GET localhost:5000/api/gacha/history
+   Input = Header:
+   Key: Authorization
+   Value: JWT <token>
+   Deskripsi: Melihat riwayat gacha user menggunakan token akunnya
+
+5. Prize Remaining
+   GET localhost:5000/api/prizes/remaining
+   Deskripsi: Melihat daftar hadiah dan jumlah yang masih tersisa
+
+6. Winners
+   localhost:5000/api/winners
+   Deskripsi: Melihat daftar user yang menang beserta hadiahnya. Nama user disamarkan secara acak
