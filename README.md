@@ -55,5 +55,5 @@ Server berjalan di localhost:5000
    Deskripsi: Melihat daftar hadiah dan jumlah yang masih tersisa
 
 6. Winners  
-   localhost:5000/api/winners  
+   GET localhost:5000/api/winners  
    Deskripsi: Melihat daftar user yang menang beserta hadiahnya. Nama user disamarkan secara acak
